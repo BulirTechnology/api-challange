@@ -1,0 +1,15 @@
+node_modules/
+docker-publish.yml
+dist/
+.DS_Store
+
+# Environment variable
+.env
+
+TODO.md
+teste18@getnada.com
+firebase-admin-sdk.json
+
+/keys/*
+
+.env.local

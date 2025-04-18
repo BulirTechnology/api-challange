@@ -1,0 +1,350 @@
+<!DOCTYPE>
+<html lang="pt">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Código OTP para validar número</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@YOUR_FONT_WEIGHT&display=swap" />
+  <style type="text/css">
+    * {
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      Margin: 0;
+      padding: 0;
+      min-width: 100%;
+      font-family: 'Poppins', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      mso-line-height-rule: exactly;
+    }
+
+    table {
+      border-spacing: 0;
+      color: #333333;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    img {
+      border: 0;
+    }
+
+    .wrapper {
+      width: 100%;
+      table-layout: fixed;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .additional-wrapper {
+      width: 100%;
+      table-layout: fixed;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+      background-color: #f3f2f0;
+    }
+
+    .webkit {
+      max-width: 800px;
+    }
+
+    .outer {
+      margin: 0 auto;
+      width: 100%;
+      max-width: 800px;
+      border-spacing: 0;
+    }
+
+    .full-width-image img {
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+    }
+
+    .inner {
+      padding: 10px;
+    }
+
+    p {
+      Margin: 0;
+      padding-bottom: 10px;
+    }
+
+    .h1 {
+      font-size: 21px;
+      font-weight: bold;
+      Margin-top: 15px;
+      Margin-bottom: 5px;
+      font-family: 'Poppins', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .h2 {
+      font-size: 18px;
+      font-weight: bold;
+      Margin-top: 10px;
+      Margin-bottom: 5px;
+      font-family: 'Poppins', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .one-column-1 {
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-right: 0;
+      padding-left: 0;
+    }
+
+    .one-column .contents {
+      text-align: left;
+      font-family: 'Poppins', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .one-column p {
+      font-size: 14px;
+      Margin-bottom: 10px;
+      font-family: 'Poppins', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .two-column {
+      text-align: center;
+      font-size: 0;
+    }
+
+    .two-column .column {
+      width: 100%;
+      max-width: 300px;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .contents {
+      width: 100%;
+    }
+
+    .two-column .contents {
+      font-size: 14px;
+      text-align: left;
+    }
+
+    .two-column img {
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+    }
+
+    .two-column .text {
+      padding-top: 10px;
+    }
+
+    .three-column {
+      text-align: center;
+      font-size: 0;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    .three-column .column {
+      width: 100%;
+      max-width: 200px;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .three-column .contents {
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .three-column img {
+      width: 100%;
+      max-width: 180px;
+      height: auto;
+    }
+
+    .three-column .text {
+      padding-top: 10px;
+    }
+
+    .img-align-vertical img {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .body-class {
+      margin: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-right: 0;
+      padding-left: 0;
+      min-width: 100%;
+      background-color: #f3f2f0;
+    }
+
+    @media only screen and (max-device-width: 480px) {
+
+      table[class=hide],
+      img[class=hide],
+      div[class=hide] {
+        display: none !important;
+      }
+
+      .contents1 {
+        width: 100%;
+      }
+    }
+  </style>
+  <style>
+    .main-bg {
+      background-color: #f8f8f8;
+      border-radius: 10px;
+    }
+
+    .webkit-additional {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .inner-outer {
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-right: 0;
+      padding-left: 0;
+    }
+
+    .w-100 {
+      width: 100%;
+    }
+
+    .margin-auto {
+      margin: 0 auto
+    }
+  </style>
+</head>
+
+<body class="body-class">
+  <br />
+  <div class="wrapper additional-wrapper">
+    <div class="main-bg">
+      <div class="webkit webkit-additional">
+        <div class="outer">
+          <div class="inner-outer">
+
+
+            <div class="w-100">
+              <div class="margin-auto">
+                <div class="one-column one-column-1" style="display: flex;padding: 40px 0 10px 40px;">
+                  <div class="second-column">
+                    <div class="two-column"
+                      style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;text-align:center;font-size:0;">
+                      <div class="column" style="width:100%;max-width:220px;display:inline-block;vertical-align:top;">
+                        <div class="contents" style="border-spacing:0; width:100%">
+                          <div style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0px;">
+                            <a href="#" target="_blank">
+                              <img src="https://bulir.com/_next/static/media/logo.0ea7cf4e.svg" alt=""
+                                style="border-width:0; height:auto; display:block" />
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <div class="one-column" style="border-spacing:0; border-bottom:1px solid #e8e7e5">
+              <div style="padding:0px 40px 40px 40px">
+                <p
+                  style="color:#0C2340; font-size:18px; text-align:left; font-family: 'Poppins', sans-serif; margin-bottom: 0;">
+                  Olá {{username}},
+                </p>
+
+                <p>Você está a um passo de concluir o processo de validação do seu número de telefone. Para garantir a
+                  segurança da sua conta, precisamos confirmar que este é realmente o seu número de telefone</p>
+
+                <p>Por favor, utilize o código OTP abaixo para validar seu número de telefone:</p>
+                <p
+                style="color:#0C2340; font-size:16px; text-align:left; font-family: 'Poppins', sans-serif; line-height:22px; margin-bottom: 0; font-weight: bold;">
+                  
+                Código OTP: {{otpCode}}</p>
+                <p>Se você não solicitou esta validação ou não reconhece esta atividade, por favor, ignore este e-mail.
+                  Sua conta está segura e não será afetada.</p>
+                
+              </div>
+            </div>
+
+            <div class="two-column"
+              style="padding-top:20px;padding-bottom:20px;padding-right:40px;padding-left:40px;text-align:center;font-size:0;">
+              <div style="width:100%;display:inline-block;vertical-align:top;">
+                <table class="contents" style="border-spacing:0; width:100%">
+                  <thead>
+                    <th></th>
+                    <th></th>
+                  </thead>
+
+                  <div>
+                    <div style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;">
+                      <p style="color:#0C2340; font-size:14px; text-align:left; font-family: 'Poppins', sans-serif">
+                        Rua Luther King 89, 1-D, Maculusso<br />
+                        Luanda, Angola<br />
+                        <a href="https://bulir.com">https://bulir.com</a>
+                      </p>
+                    </div>
+                  </div>
+
+                </table>
+              </div>
+
+              <div style="width:100%;display:inline-block;vertical-align:top;">
+                <div style="border-spacing:0">
+
+                  <div style="display: flex; gap: 10px;">
+                    <div>
+                      <a href="#" target="_blank">
+                        <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+                          <g transform="translate(0 -1028.4)">
+                           <g>
+                            <path d="m4 1031.4c-1.1046 0-2 0.9-2 2v16c0 1.1 0.8954 2 2 2h16c1.105 0 2-0.9 2-2v-16c0-1.1-0.895-2-2-2h-16z" fill="#30497b"/>
+                            <path d="m4 2c-1.1046 0-2 0.8954-2 2v16c0 1.105 0.8954 2 2 2h16c1.105 0 2-0.895 2-2v-16c0-1.1046-0.895-2-2-2h-16z" transform="translate(0 1028.4)" fill="#3b5998"/>
+                            <path d="m17 1034.4c-2.209 0-4 1.8-4 4v3h-2v3h2v7h3v-7h2.454l0.546-3h-3v-3c0-0.6 0.448-1 1-1h2v-3z" fill="#30497b"/>
+                            <path d="m17 5c-2.209 0-4 1.7909-4 4v3h-2v3h2v7h3v-7h2.454l0.546-3h-3v-3c0-0.5523 0.448-1 1-1h2v-3z" transform="translate(0 1028.4)" fill="#ecf0f1"/>
+                            <rect transform="translate(0 1028.4)" height="1" width="3" y="22" x="13" fill="#bdc3c7"/>
+                           </g>
+                          </g>
+                         </svg>
+                      </a>
+                    </div>
+                    <div>
+                      <a href="#" target="_blank">
+                        <svg fill="none" height="22px" width="22px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 0h512v512H0z" fill="#000"/><path clip-rule="evenodd" d="M192.034 98H83l129.275 170.757L91.27 412h55.908l91.521-108.34 81.267 107.343H429L295.968 235.284l.236.303L410.746 99.994h-55.908l-85.062 100.694zm-48.849 29.905h33.944l191.686 253.193h-33.944z" fill="#fff" fill-rule="evenodd"/></svg>
+                      </a>
+                    </div>
+                    <div>
+                      <a href="#" target="_blank">
+                        <svg width="24px" height="24px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none"><path fill="#0A66C2" d="M12.225 12.225h-1.778V9.44c0-.664-.012-1.519-.925-1.519-.926 0-1.068.724-1.068 1.47v2.834H6.676V6.498h1.707v.783h.024c.348-.594.996-.95 1.684-.925 1.802 0 2.135 1.185 2.135 2.728l-.001 3.14zM4.67 5.715a1.037 1.037 0 01-1.032-1.031c0-.566.466-1.032 1.032-1.032.566 0 1.031.466 1.032 1.032 0 .566-.466 1.032-1.032 1.032zm.889 6.51h-1.78V6.498h1.78v5.727zM13.11 2H2.885A.88.88 0 002 2.866v10.268a.88.88 0 00.885.866h10.226a.882.882 0 00.889-.866V2.865a.88.88 0 00-.889-.864z"/></svg>
+                       </a>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+</body>
+
+</html>

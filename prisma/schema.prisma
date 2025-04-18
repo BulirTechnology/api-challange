@@ -1,0 +1,1084 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserState {
+  Active // The user account is in good standing and is allowed to perform all relevant actions on the platform
+  Inactive // The user has chosen to deactivate their account temporarily. During this period, they are not be able to use services.
+  SetupAccount
+  UnderReview // 
+  RequestDelete
+}
+
+enum Gender {
+  Male
+  Female
+  NotTell
+}
+
+enum AccountType {
+  Client
+  ServiceProvider
+  SuperAdmin
+}
+
+enum OTPFor {
+  Email
+  PhoneNumber
+  Password
+}
+
+enum EducationLevel {
+  PrimaryEducation
+  SecondaryEducation
+  HigherEducation
+  GraduateEducation
+  ProfessionalDegrees
+}
+
+enum DocumentType {
+  NIF
+  BI_FRONT
+  BI_BACK
+}
+
+enum Rate {
+  FIXED
+  HOURLY
+}
+
+enum UserPromotionState {
+  PENDING
+  USED
+}
+
+enum Language {
+  PORTUGUESE
+  ENGLISH
+}
+
+enum NotificationType {
+  RegisterSuccess
+  NewOfferReceivedQuotation
+  RequestToCompleteJob
+  RequestToStartJob
+  JobExpired
+  MoneyAddedToWallet
+  MoneyWithdraw
+  Promotions
+  JobDisputeRaised
+  JobDisputeClosed
+  JobCompleteAutoApproval
+  JobQuoted
+  JobAccepted
+  JobQuotedRejected
+  RequestToStartJobDenied
+  RequestToStartJobAccepted
+  RequestToCompleteJobDenied
+  RequestToCompleteJobAccepted
+  BookingStartIn1Hour
+  BookingStartIn15Minutes
+  SubscriptionAboutExpire
+  PurchaseCredit
+}
+
+model Activity {
+  id        String   @id @default(uuid())
+  userId    String
+  activity  String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("activities")
+}
+
+model Otp {
+  id               String   @id @default(uuid())
+  code             String
+  userId           String
+  createdAt        DateTime @default(now())
+  expiresAt        DateTime
+  isVerified       Boolean  @default(false)
+  verificationType OTPFor
+  user             User     @relation(fields: [userId], references: [id])
+
+  @@map("otps")
+}
+
+enum AuthProvider {
+  email
+  google
+  apple
+  facebook
+}
+
+model User {
+  id                          String             @id @default(uuid())
+  email                       String
+  phoneNumber                 String             @default("")
+  password                    String
+  refreshToken                String?
+  isAuthenticated             Boolean            @default(false)
+  profileUrl                  String             @default("") @map("profile_url")
+  createdAt                   DateTime           @default(now()) @map("created_at")
+  updatedAt                   DateTime?          @default(now()) @map("updated_at")
+  state                       UserState
+  accountType                 AccountType        @default(Client)
+  isEmailValidated            Boolean            @default(false)
+  isPhoneNumberValidated      Boolean            @default(false)
+  defaultLanguage             Language           @default(PORTUGUESE)
+  referralCode                String             @default("")
+  referredBy                  String?
+  online                      Boolean            @default(false)
+  otps                        Otp[]
+  addresses                   Address[]
+  disputes                    FileDispute[]
+  activities                  Activity[]
+  notificationToken           String?
+  client                      Client?
+  socketId                    String?
+  message                     Message[]
+  alreadyLogin                Boolean            @default(false)
+  //rating                 Rating[]
+  authProvider                AuthProvider       @default(email)
+  emailPhoneUpdate            EmailPhoneUpdate[]
+  paymenthMethod              PaymentMethod[]
+  notification                Notification[]
+  pushNotification            PushNotification[]
+  serviceProvider             ServiceProvider?
+  userPromotion               UserPromotion[]
+  wallet                      Wallet?
+  NotificationToken           NotificationToken?
+  resetPasswordToken          String?
+  resetPasswordTokenExpiresAt DateTime?
+
+  @@map("users")
+}
+
+model Client {
+  id                       String                          @id @default(uuid())
+  firstName                String
+  lastName                 String
+  gender                   Gender                          @default(NotTell)
+  bornAt                   DateTime?
+  userId                   String                          @unique
+  createdAt                DateTime                        @default(now()) @map("created_at")
+  updatedAt                DateTime?                       @default(now()) @map("updated_at")
+  tasks                    Task[]
+  jobs                     Job[]
+  booking                  Booking[]
+  favoriteServiceProviders ClientServiceProviderFavorite[]
+  user                     User                            @relation(fields: [userId], references: [id])
+
+  @@map("clients")
+}
+
+model ServiceProvider {
+  id                    String                          @id @default(uuid())
+  firstName             String
+  lastName              String
+  gender                Gender                          @default(NotTell)
+  bornAt                DateTime
+  description           String                          @default("")
+  education             EducationLevel                  @default(PrimaryEducation)
+  subscriptionId        String                          @default("")
+  userId                String                          @unique
+  isApproved            Boolean                         @default(false)
+  hasBudget             Boolean                         @default(false)
+  hasCertificateByBulir Boolean                         @default(false)
+  createdAt             DateTime                        @default(now()) @map("created_at")
+  updatedAt             DateTime?                       @default(now()) @map("updated_at")
+  documents             Documents[]
+  quotations            Quotation[]
+  portfolios            Portfolio[]
+  privateTask           PrivateTask[]
+  bookings              Booking[]
+  jobViews              ServiceProviderJobViews[]
+  specializations       Specialization[]
+  skills                SkillServiceProvider[]
+  favoritedBy           ClientServiceProviderFavorite[]
+  user                  User                            @relation(fields: [userId], references: [id])
+
+  @@map("service_providers")
+}
+
+model ClientServiceProviderFavorite {
+  id                String          @id @default(uuid())
+  client            Client          @relation(fields: [clientId], references: [id])
+  clientId          String
+  serviceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
+  serviceProviderId String
+  createdAt         DateTime        @default(now()) @map("created_at")
+  updatedAt         DateTime?       @default(now()) @map("updated_at")
+
+  @@map("client_service_provider_favorites")
+}
+
+model Documents {
+  id                String          @id @default(uuid())
+  title             String
+  url               String
+  type              DocumentType
+  serviceProviderId String
+  serviceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
+  createdAt         DateTime        @default(now()) @map("created_at")
+  updatedAt         DateTime?       @default(now()) @map("updated_at")
+
+  @@map("documents")
+}
+
+model Category {
+  id            String        @id @default(uuid())
+  title         String
+  titleEn       String        @default("") @map("title_en")
+  url           String
+  priority      Int           @default(1)
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime?     @default(now()) @map("updated_at")
+  subcategories SubCategory[]
+
+  @@map("categories")
+}
+
+model SubCategory {
+  id                String           @id @default(uuid())
+  title             String
+  titleEn           String           @default("") @map("title_en")
+  url               String
+  hasSubSubCategory Boolean          @default(true)
+  categoryId        String           @map("category_id")
+  createdAt         DateTime         @default(now()) @map("created_at")
+  updatedAt         DateTime?        @default(now()) @map("updated_at")
+  category          Category         @relation(fields: [categoryId], references: [id])
+  subCategory       SubSubCategory[]
+
+  @@map("sub_categories")
+}
+
+model SubSubCategory {
+  id            String      @id @default(uuid())
+  title         String
+  titleEn       String      @default("") @map("title_en")
+  url           String
+  subCategoryId String      @map("sub_category_id")
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime?   @default(now()) @map("updated_at")
+  category      SubCategory @relation(fields: [subCategoryId], references: [id])
+  services      Services[]
+
+  @@map("sub_sub_categories")
+}
+
+model Services {
+  id               String           @id @default(uuid())
+  title            String
+  titleEn          String           @default("") @map("title_en")
+  tasks            Task[]
+  jobs             Job[]
+  specialization   Specialization[]
+  questions        Question[]
+  subSubCategoryId String           @map("sub_sub_category_id")
+  createdAt        DateTime         @default(now()) @map("created_at")
+  updatedAt        DateTime?        @default(now()) @map("updated_at")
+  category         SubSubCategory   @relation(fields: [subSubCategoryId], references: [id])
+
+  @@map("services")
+}
+
+model Portfolio {
+  id                String          @id @default(uuid())
+  title             String
+  description       String
+  image1            String?
+  image2            String?
+  image3            String?
+  image4            String?
+  image5            String?
+  image6            String?
+  serviceProviderId String          @map("service_provider_id")
+  createdAt         DateTime        @default(now()) @map("created_at")
+  updatedAt         DateTime?       @default(now()) @map("updated_at")
+  serviceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
+
+  @@map("portfolios")
+}
+
+model Specialization {
+  id                String          @id @default(uuid())
+  title             String
+  serviceProviderId String          @map("service_provider_id")
+  serviceId         String?         @map("service_id")
+  rate              Rate
+  price             Decimal
+  createdAt         DateTime        @default(now()) @map("created_at")
+  updatedAt         DateTime?       @default(now()) @map("updated_at")
+  serviceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
+  service           Services?       @relation(fields: [serviceId], references: [id])
+
+  @@map("specializations")
+}
+
+model Address {
+  id        String    @id @default(uuid())
+  name      String
+  line1     String
+  line2     String
+  latitude  Decimal
+  longitude Decimal
+  isPrimary Boolean
+  tasks     Task[]
+  jobs      Job[]
+  isActive  Boolean   @default(true)
+  userId    String    @map("user_id")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @default(now()) @map("updated_at")
+  user      User      @relation(fields: [userId], references: [id])
+
+  @@map("addresses")
+}
+
+enum PromotionType {
+  Percentage
+  Money
+}
+
+enum PromotionStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model Promotion {
+  id             String          @id @default(uuid())
+  name           String          @unique()
+  maxAllowedUser Int
+  description    String
+  descriptionEn  String          @default("")
+  discount       Float
+  promotionFor   AccountType
+  status         PromotionStatus
+  expiresAt      DateTime        @default(now()) @map("expires_at")
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime?       @default(now()) @map("updated_at")
+  userPromotion  UserPromotion[]
+  promotionType  PromotionType   @default(Percentage)
+
+  @@map("promotions")
+}
+
+model UserPromotion {
+  id          String             @id @default(uuid())
+  userId      String
+  promotionId String
+  state       UserPromotionState
+  user        User               @relation(fields: [userId], references: [id])
+  promotion   Promotion          @relation(fields: [promotionId], references: [id])
+  createdAt   DateTime           @default(now()) @map("created_at")
+  updatedAt   DateTime?          @default(now()) @map("updated_at")
+
+  @@map("user_promotions")
+}
+
+model PaymentMethod {
+  id             String    @id @default(uuid())
+  userId         String
+  bankName       String    @map("bank_name")
+  bankHolderName String    @map("bank_holder_name")
+  iban           String
+  city           String
+  user           User      @relation(fields: [userId], references: [id])
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime? @default(now()) @map("updated_at")
+
+  @@map("payment_methods")
+}
+
+model Notification {
+  id            String           @id @default(uuid())
+  userId        String
+  title         String
+  titleEn       String           @default("")
+  readed        Boolean          @default(false)
+  description   String
+  descriptionEn String           @default("")
+  type          NotificationType @default(RegisterSuccess)
+  user          User             @relation(fields: [userId], references: [id])
+  parentId      String?
+  createdAt     DateTime         @default(now()) @map("created_at")
+  updatedAt     DateTime?        @default(now()) @map("updated_at")
+
+  @@map("notifications")
+}
+
+enum PushNotificationStatus {
+  PENDING
+  SENDED
+}
+
+enum PushNotificationRedirectTo {
+  DASHBOARD
+  JOBDETAILS
+  EMPTY
+  BOOKINGDETAILS
+  QUOTATIONDETAILS
+  TRANSACTIONDETAILS
+}
+
+model PushNotification {
+  id            String                     @id @default(uuid())
+  userId        String
+  title         String
+  titleEn       String                     @default("")
+  description   String
+  descriptionEn String                     @default("")
+  user          User                       @relation(fields: [userId], references: [id])
+  parentId      String?
+  status        PushNotificationStatus     @default(PENDING)
+  redirectTo    PushNotificationRedirectTo @default(EMPTY)
+  createdAt     DateTime                   @default(now()) @map("created_at")
+  updatedAt     DateTime?                  @default(now()) @map("updated_at")
+
+  @@map("push_notifications")
+}
+
+model Skill {
+  id    String                 @id @default(uuid())
+  name  String                 @unique
+  users SkillServiceProvider[]
+
+  @@map("skiils")
+}
+
+model SkillServiceProvider {
+  id                String @id @default(uuid())
+  serviceProviderId String
+  skillId           String
+
+  user  ServiceProvider @relation(fields: [serviceProviderId], references: [id])
+  skill Skill           @relation(fields: [skillId], references: [id])
+
+  @@unique([serviceProviderId, skillId])
+  @@map("skill_service_providers")
+}
+
+model Option {
+  id         String   @id @default(uuid())
+  value      String
+  questionId String   @map("question_id")
+  question   Question @relation(fields: [questionId], references: [id])
+
+  @@map("options")
+}
+
+enum QuestionType {
+  SIMPLE
+  SINGLE_SELECT
+  SINGLE_SELECT_IMAGE
+  SINGLE_NUMBER
+  MULTIPLE_SELECT
+  BOOLEAN
+}
+
+enum QuestionState {
+  ACTIVE
+  INACTIVE
+  DRAFT
+}
+
+model Question {
+  id        String        @id @default(uuid())
+  title     String
+  state     QuestionState @default(DRAFT)
+  type      QuestionType  @default(SIMPLE)
+  options   Option[]
+  answers   Answer[]
+  answerJob AnswerJob[]
+  createdAt DateTime      @default(now()) @map("created_at")
+  updatedAt DateTime?     @default(now()) @map("updated_at")
+  serviceId String?
+  service   Services?     @relation(fields: [serviceId], references: [id])
+
+  @@map("questions")
+}
+
+enum TaskStatus {
+  ACTIVE
+  DRAFT
+  INACTIVE
+  PUBLISHED
+  CLOSED
+}
+
+enum ViewState {
+  PUBLIC
+  PRIVATE
+}
+
+enum DraftStep {
+  SelectBaseInfo
+  SelectServiceProviders
+  SelectAddress
+  SelectAnswers
+  SelectImages
+  SelectCategory
+  SelectSubCategory
+  SelectSubSubCategory
+  SelectService
+  SelectStartDate
+}
+
+model Task {
+  id               String        @id @default(uuid())
+  title            String
+  description      String
+  price            Decimal
+  viewState        ViewState     @default(PUBLIC)
+  startDate        DateTime?
+  serviceId        String?
+  addressId        String?
+  clientId         String
+  image1           String?
+  image2           String?
+  image3           String?
+  image4           String?
+  image5           String?
+  image6           String?
+  categoryId       String?       @default("")
+  subCategoryId    String?       @default("")
+  subSubCategoryId String?       @default("")
+  service          Services?     @relation(fields: [serviceId], references: [id])
+  address          Address?      @relation(fields: [addressId], references: [id])
+  client           Client        @relation(fields: [clientId], references: [id])
+  state            TaskStatus    @default(DRAFT)
+  draftStep        DraftStep     @default(SelectBaseInfo)
+  answers          Answer[]
+  privateTask      PrivateTask[]
+  createdAt        DateTime      @default(now()) @map("created_at")
+  updatedAt        DateTime?     @default(now()) @map("updated_at")
+
+  @@map("tasks")
+}
+
+model PrivateTask {
+  id                String          @id @default(uuid())
+  taskId            String          @map("job_id")
+  serviceProviderId String          @map("service_provider_id")
+  serviceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
+  task              Task            @relation(fields: [taskId], references: [id])
+
+  @@map("private_tasks")
+}
+
+model Answer {
+  id         String    @id @default(uuid())
+  value      String
+  questionId String
+  taskId     String
+  question   Question  @relation(fields: [questionId], references: [id])
+  task       Task      @relation(fields: [taskId], references: [id])
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime? @default(now()) @map("updated_at")
+
+  @@map("answers")
+}
+
+model AnswerJob {
+  id         String    @id @default(uuid())
+  value      String
+  questionId String
+  jobId      String
+  job        Job       @relation(fields: [jobId], references: [id])
+  question   Question  @relation(fields: [questionId], references: [id])
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime? @default(now()) @map("updated_at")
+
+  @@map("answer_jobs")
+}
+
+enum JobStatus {
+  OPEN
+  CLOSED
+  BOOKED
+}
+
+enum QuotationStatus {
+  OPEN_TO_QUOTE
+  QUOTED
+}
+
+model Job {
+  id                String                    @id @default(uuid())
+  title             String
+  description       String
+  price             Decimal
+  startDate         DateTime
+  serviceId         String
+  addressId         String
+  clientId          String
+  image1            String
+  image2            String?
+  image3            String?
+  image4            String?
+  image5            String?
+  image6            String?
+  cancelReasonId    String?
+  cancelDescription String?
+  service           Services                  @relation(fields: [serviceId], references: [id])
+  address           Address                   @relation(fields: [addressId], references: [id])
+  client            Client                    @relation(fields: [clientId], references: [id])
+  answers           AnswerJob[]
+  quotation         Quotation[]
+  transactions      Transaction[]
+  jobViews          ServiceProviderJobViews[]
+  bookings          Booking[]
+  viewState         ViewState                 @default(PUBLIC)
+  state             JobStatus                 @default(OPEN)
+  quotationState    QuotationStatus           @default(OPEN_TO_QUOTE)
+  createdAt         DateTime                  @default(now()) @map("created_at")
+  updatedAt         DateTime?                 @default(now()) @map("updated_at")
+
+  @@map("jobs")
+}
+
+model TaskDeleteReason {
+  id    String @id @default(uuid())
+  value String
+
+  @@map("task_delete_reason")
+}
+
+model JobCancelReason {
+  id      String @id @default(uuid())
+  value   String
+  valueEn String @default("")
+
+  @@map("job_cancel_reason")
+}
+
+model FileDisputeReason {
+  id          String        @id @default(uuid())
+  value       String
+  valueEn     String        @default("")
+  fileDispute FileDispute[]
+
+  @@map("file_dispute_reason")
+}
+
+model QuotationRejectReason {
+  id    String @id @default(uuid())
+  value String
+
+  @@map("quotation_reject_reason")
+}
+
+enum QuotationTableStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model ServiceProviderJobViews {
+  id                String          @id @default(uuid())
+  serviceProviderId String
+  jobId             String
+  createdAt         DateTime        @default(now()) @map("created_at")
+  serviceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id])
+  job               Job             @relation(fields: [jobId], references: [id])
+
+  @@map("service_provider_job_views")
+}
+
+model Quotation {
+  id                String               @id @default(uuid())
+  cover             String
+  budget            Decimal
+  date              DateTime
+  jobId             String
+  serviceProviderId String
+  rejectReasonId    String?
+  rejectDescription String?
+  readByClient      Boolean              @default(false)
+  status            QuotationTableStatus
+  serviceProvider   ServiceProvider      @relation(fields: [serviceProviderId], references: [id])
+  job               Job                  @relation(fields: [jobId], references: [id])
+  createdAt         DateTime             @default(now()) @map("created_at")
+  updatedAt         DateTime?            @default(now()) @map("updated_at")
+
+  @@map("quotations")
+}
+
+enum NotificationStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model NotificationToken {
+  id                String             @id @default(uuid())
+  deviceType        String             @map("device_type")
+  notificationToken String             @map("notification_token")
+  status            NotificationStatus
+  userId            String             @unique
+  user              User               @relation(fields: [userId], references: [id])
+
+  @@map("notification_tokens")
+}
+
+model Wallet {
+  id            String        @id @default(uuid())
+  balance       Float
+  creditBalance Float
+  userId        String        @unique
+  user          User          @relation(fields: [userId], references: [id])
+  transactions  Transaction[]
+
+  @@map("wallets")
+}
+
+enum TransactionType {
+  PurchaseCredit
+  DiscountCredit
+  ServiceFee
+  Withdrawal
+  Refund
+  Promotion
+  AddMoney
+  SubscriptionDebts
+  SubscriptionPayment
+  ServicePayment
+  ServiceSalary
+}
+
+enum TransactionState {
+  Completed
+  Pending
+  Cancelled
+  Used
+}
+
+model Transaction {
+  id            String           @id @default(uuid())
+  amount        Float
+  description   String
+  descriptionEn String           @default("")
+  type          TransactionType
+  status        TransactionState
+  createdAt     DateTime         @default(now())
+  jobId         String?
+  job           Job?             @relation(fields: [jobId], references: [id])
+  walletId      String
+  promotionId   String?
+  wallet        Wallet           @relation(fields: [walletId], references: [id])
+  updatedAt     DateTime?        @default(now()) @map("updated_at")
+
+  @@map("transactions")
+}
+
+enum BookingState {
+  PENDING
+  ACTIVE
+  COMPLETED
+  EXPIRED
+  DISPUTE
+}
+
+enum BookingWorkState {
+  UPCOMING
+  RUNNING
+}
+
+enum BookingRequestWorkState {
+  UPCOMING
+  REQUEST_START
+  REQUEST_START_DENIED
+  RUNNING
+  REQUEST_FINISH
+  REQUEST_FINISH_DENIED
+  COMPLETED
+  DISPUTE
+}
+
+model Booking {
+  id                  String                  @id @default(uuid())
+  workState           BookingWorkState
+  requestWorkState    BookingRequestWorkState @default(UPCOMING)
+  state               BookingState
+  jobId               String
+  workDate            DateTime
+  finalPrice          Float
+  job                 Job                     @relation(fields: [jobId], references: [id])
+  serviceProviderId   String
+  clientId            String
+  totalTryingToStart  Int                     @default(0)
+  totalTryingToFinish Int                     @default(0)
+  completedAt         DateTime?
+  fileDispute         FileDispute[]
+  conversation        Conversation?
+  rating              ReviewAndRating[]
+  serviceProvider     ServiceProvider         @relation(fields: [serviceProviderId], references: [id])
+  client              Client                  @relation(fields: [clientId], references: [id])
+  createdAt           DateTime                @default(now()) @map("created_at")
+  updatedAt           DateTime?               @default(now()) @map("updated_at")
+
+  @@map("bookings")
+}
+
+enum FileDisputeStatus {
+  PENDING
+  COMPLETED
+}
+
+model FileDispute {
+  id                  String            @id @default(uuid())
+  userId              String
+  status              FileDisputeStatus
+  fileDisputeReasonId String
+  description         String
+  bookingId           String            @unique()
+  resolutionDate      DateTime?
+  resolutionComment   String?
+  booking             Booking           @relation(fields: [bookingId], references: [id])
+  fileDisputeReason   FileDisputeReason @relation(fields: [fileDisputeReasonId], references: [id])
+  user                User              @relation(fields: [userId], references: [id])
+  createdAt           DateTime          @default(now()) @map("created_at")
+  updatedAt           DateTime?         @default(now()) @map("updated_at")
+
+  @@map("file_disputes")
+}
+
+model ReviewAndRating {
+  id         String    @id @default(uuid())
+  stars      Int
+  comment    String?
+  reviewerId String // the user who received the rating
+  userId     String // the user who gave the rating
+  bookingId  String
+  booking    Booking   @relation(fields: [bookingId], references: [id])
+  //ratedUse           User                 @relation(fields: [ratedUserId], references: [id])
+  //raterUser          User                 @relation(fields: [raterUserId], references: [id])
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime? @default(now()) @map("updated_at")
+
+  @@map("review_and_ratings")
+}
+
+enum EmailPhoneType {
+  Email
+  Phone
+}
+
+model EmailPhoneUpdate {
+  id           String         @id @default(uuid())
+  emailOrPhone String
+  userId       String
+  type         EmailPhoneType
+  user         User           @relation(fields: [userId], references: [id])
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime?      @default(now()) @map("updated_at")
+
+  @@map("email_phone_updates")
+}
+
+model Conversation {
+  id        String    @id @default(uuid())
+  messages  Message[]
+  booking   Booking?  @relation(fields: [bookingId], references: [id])
+  bookingId String    @unique()
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @default(now()) @map("updated_at")
+
+  @@map("conversations")
+}
+
+model Message {
+  id             String       @id @default(uuid())
+  content        String
+  sendById       String
+  conversationId String
+  readed         Boolean      @default(false)
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  sendBy         User         @relation(fields: [sendById], references: [id])
+  createdAt      DateTime     @default(now()) @map("created_at")
+  updatedAt      DateTime?    @default(now()) @map("updated_at")
+
+  @@map("messages")
+}
+
+model ActiveConversation {
+  id             String    @id @default(uuid())
+  socketId       String    @unique()
+  userId         String
+  conversationId String
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime? @default(now()) @map("updated_at")
+
+  @@map("active_conversations")
+}
+
+enum DiscountCommissionStatus {
+  ACTIVE
+  INACTIVE
+  DRAFT
+}
+
+model DiscountCommission {
+  id         String                   @id @default(uuid())
+  planId     String
+  minValue   Float
+  maxValue   Float
+  commission Float
+  status     DiscountCommissionStatus
+  // Relacionamento com o plano de assinatura
+  plan       SubscriptionPlan         @relation(fields: [planId], references: [id])
+
+  @@map("discount_commissions")
+}
+
+enum DiscountType {
+  FIXED
+  TIERED
+}
+
+enum SubscriptionPlanStatus {
+  ACTIVE
+  INACTIVE
+  DRAFT
+}
+
+model SubscriptionPlan {
+  id             String                 @id @default(uuid())
+  name           String
+  description    String
+  price          Float
+  duration       Int
+  discountType   DiscountType           @default(TIERED)
+  creditsPerJob  Int
+  rollOverCredit Int
+  isDefault      Boolean                @default(false)
+  discountValue  Float?
+  benefits       String[]
+  DiscountTable  DiscountCommission[]
+  subscription   Subscription[]
+  status         SubscriptionPlanStatus
+  createdAt      DateTime               @default(now()) @map("created_at")
+  updatedAt      DateTime               @default(now()) @map("updated_at")
+
+  @@map("subscription_plan")
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  INACTIVE
+  CANCELLED
+}
+
+model Subscription {
+  id                 String             @id @default(uuid())
+  serviceProviderId  String
+  subscriptionPlan   SubscriptionPlan   @relation(fields: [subscriptionPlanId], references: [id])
+  subscriptionPlanId String
+  startDate          DateTime           @default(now())
+  endDate            DateTime
+  status             SubscriptionStatus
+  createdAt          DateTime           @default(now()) @map("created_at")
+  updatedAt          DateTime           @default(now()) @map("updated_at")
+
+  @@map("subscriptions")
+}
+
+enum CreditPackageStatus {
+  ACTIVE
+  INACTIVE
+  DRAFT
+}
+
+model CreditPackage {
+  id          String              @id @default(uuid())
+  name        String
+  totalCredit Int
+  amount      Float
+  vat         Float
+  status      CreditPackageStatus
+  createdAt   DateTime            @default(now()) @map("created_at")
+  updatedAt   DateTime            @default(now()) @map("updated_at")
+
+  @@map("credit_packages")
+}
+
+enum LuandaCity {
+  Outro
+  IcoloBengo
+  Luanda
+  Quicama
+  Cacuaco
+  Cazenga
+  Viana
+  Belas
+  KilambaKiaxi
+  Talatona
+}
+
+enum AgeGroup {
+  from16To24
+  from25To34
+  from35To44
+  from45To54
+  from55To64
+  from65OrMore
+}
+
+enum SpendOnServices {
+  from3000To9000
+  from10000To19000
+  from20000To39000
+  from40000OrMore
+}
+
+enum WayFindServiceProvider {
+  fromFriendsOrTrustedPeople
+  fromFamilyRecommendation
+  fromAnyoneRecommendation
+  fromInternetSearch
+  other
+}
+
+enum WayToWork {
+  haveWorkAndFreelancerOnFreeTime
+  workAsFreelancer
+  haveWorkAndFreelancerOnVocation
+}
+
+model ClientInquire {
+  id                     String                 @id @default(uuid())
+  emailOrNumber          String
+  city                   LuandaCity
+  whereLeave             String
+  ageGroup               AgeGroup
+  preferredServices      String[]
+  spendOnServices        SpendOnServices
+  wayFindServiceProvider WayFindServiceProvider
+  createdAt              DateTime               @default(now()) @map("created_at")
+  updatedAt              DateTime               @default(now()) @map("updated_at")
+
+  @@map("client_inquires")
+}
+
+model ServiceProviderInquire {
+  id                String     @id @default(uuid())
+  emailOrNumber     String
+  city              LuandaCity
+  whereLeave        String
+  ageGroup          AgeGroup
+  preferredServices String[]
+  wayToWork         WayToWork
+  createdAt         DateTime   @default(now()) @map("created_at")
+  updatedAt         DateTime   @default(now()) @map("updated_at")
+
+  @@map("service_provider_inquires")
+}

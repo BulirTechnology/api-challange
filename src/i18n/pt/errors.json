@@ -1,0 +1,430 @@
+{
+  "categories": {
+    "title": {
+      "invalid_type_error": "Informar o título da categoria",
+      "required_error": "Informar o título da categoria"
+    },
+    "image": {
+      "required_error": "Você tem de informar uma imagem para a categoria",
+      "file_type": "A imagem deve ser do tipo: jpg, jpeg, png or svg",
+      "file_max_size": "A imagem não pode ter mais de 6MB",
+      "invalid_file_type": "Formato de imagem invalido"
+    },
+    "not_found": "Categoria não encontrada",
+    "image_updated": "Imagem da categoria atualizada"
+  },
+  "sub_categories": {
+    "title": {
+      "invalid_type_error": "Informar o título da sub-categoria",
+      "required_error": "Informar o título da sub-categoria"
+    },
+    "category_id": {
+      "invalid_type_error": "Informar o id da categoria",
+      "required_error": "Informar o id da categoria"
+    },
+    "image": {
+      "required_error": "Você tem de informar uma imagem para a sub-categoria",
+      "file_type": "A imagem deve ser do tipo: jpg, jpeg, png or svg",
+      "file_max_size": "A imagem não pode ter mais de 6MB",
+      "invalid_file_type": "Formato de imagem invalido"
+    },
+    "not_found": "Sub-Categoria não encontrada",
+    "image_updated": "Imagem da Sub-category atualizada"
+  },
+  "sub_sub_categories": {
+    "title": {
+      "invalid_type_error": "Informar o título da sub-sub-categoria",
+      "required_error": "Informar o título da sub-sub-categoria"
+    },
+    "sub_category_id": {
+      "invalid_type_error": "Informar o id da sub-categoria",
+      "required_error": "Informar o id da sub-categoria"
+    },
+    "not_found": "Sub-sub-category não encontrada",
+    "image_updated": "Imagem da Sub-sub-category atualizada"
+  },
+  "services": {
+    "invalid_type_error": "Informe o título do serviço",
+    "required_error": "Informe o título do serviço",
+    "not_found": "Serviço não encontrado"
+  },
+  "dispute": {
+    "add_value": {
+      "invalid_type_error": "Informe a razão da disputa",
+      "required_error": "Informe a razão da disputa"
+    },
+    "client_reason": {
+      "invalid_type_error": "Informe a razão da disputa",
+      "required_error": "Informe a razão da disputa"
+    },
+    "client_reason_description": {
+      "invalid_type_error": "Informe a descrição para disputa",
+      "required_error": "Informe a descrição para disputa"
+    }
+  },
+  "job_cancel": {
+    "add_value": {
+      "invalid_type_error": "Adicione uma razão para cancelar a tarefa",
+      "required_error": "Adicione uma razão para cancelar a tarefa"
+    },
+    "client_reason": {
+      "invalid_type_error": "Informe a razão da cancelar a tarefa",
+      "required_error": "Informe a razão da cancelar a tarefa"
+    },
+    "client_reason_description": {
+      "invalid_type_error": "Informe a descrição para cancelar",
+      "required_error": "Informe a descrição para cancelar"
+    }
+  },
+  "promotion": {
+    "description": {
+      "invalid_type_error": "Informe a descrição do código de promoção",
+      "required_error": "Informe a descrição do código de promoção"
+    },
+    "discount": {
+      "invalid_type_error": "Informe o disconto do código de promoção",
+      "required_error": "Informe o disconto do código de promoção"
+    },
+    "max_allowed_user": {
+      "invalid_type_error": "Informe a quantidade de usuários",
+      "required_error": "Informe a quantidade de usuários"
+    },
+    "name": {
+      "invalid_type_error": "Informe o código da promoção",
+      "required_error": "Informe o código da promoção"
+    },
+    "promotion_for": {
+      "invalid_type_error": "Selecione para quem é a promoção",
+      "required_error": "Selecione para quem é a promoção"
+    },
+    "promotion_type": {
+      "invalid_type_error": "Informe o tipo de promoção",
+      "required_error": "Informe o tipo de promoção"
+    },
+    "expires_at": {
+      "invalid_type_error": "Informe a data de termino",
+      "required_error": "Informe a data de termino"
+    },
+    "not_found": "Código de promoção não encontrado"
+  },
+  "question": {
+    "option": {
+      "invalid_type_error": "Informe a opção da pergunta",
+      "required_error": "Informe a opção da pergunta",
+      "success_add": "Opção da pergunta adicionada com sucesso!"
+    },
+    "service_id": {
+      "invalid_type_error": "Informe o id do serviço",
+      "required_error": "Informe o id do serviço"
+    },
+    "title": {
+      "invalid_type_error": "Informe o título",
+      "required_error": "Informe o título"
+    },
+    "type_question": {
+      "invalid_type_error": "Informe o tipo de pergunta",
+      "required_error": "Informe o tipo de pergunta"
+    },
+    "state": {
+      "invalid_type_error": "Informe o estado da pergunta",
+      "required_error": "Informe o estado da pergunta"
+    },
+    "image": {
+      "required_error": "Você tem de informar uma imagem para a pergunta",
+      "file_type": "A imagem deve ser do tipo: jpg, jpeg, png",
+      "file_max_size": "A imagem não pode ter mais de 6MB",
+      "invalid_file_type": "Formato de imagem invalido"
+    },
+    "not_found": "Pergunta não encontrada",
+    "success_add": "Pergunta adicionada com sucesso"
+  },
+  "quotation": {
+    "add_reject_reason": {
+      "invalid_type_error": "Adicione uma razão para rejeitar a cotação",
+      "required_error": "Adicione uma razão para rejeitar a cotação"
+    },
+    "client_reject_reason": {
+      "invalid_type_error": "Informe uma razão para rejeitar a cotação",
+      "required_error": "Informe uma razão para rejeitar a cotação"
+    },
+    "client_reject_description": {
+      "invalid_type_error": "Informe uma descrição para rejeitar a cotação",
+      "required_error": "Informe uma descrição para rejeitar a cotação"
+    },
+    "promotion_id": {
+      "invalid_type_error": "Informe o código de promoção",
+      "required_error": "Informe o código de promoção"
+    },
+    "send_quotation": {
+      "budget": {
+        "invalid_type_error": "Informe o valor da proposta.",
+        "required_error": "Informe o valor da proposta."
+      },
+      "date": {
+        "invalid_type_error": "Informe a tua data proposta.",
+        "required_error": "Informe a tua data proposta."
+      },
+      "cover": {
+        "invalid_type_error": "Informe a descrição da tua proposta",
+        "required_error": "Informe a descrição da tua proposta"
+      }
+    },
+    "not_found": "Cotação não encontrada"
+  },
+  "task": {
+    "add_delete_reason": {
+      "invalid_type_error": "Informe a razão da rejeitar a cotação",
+      "required_error": "Informe a razão da rejeitar a cotação"
+    },
+    "title": {
+      "invalid_type_error": "Informe o titulo da tarefa",
+      "required_error": "Informe o titulo da tarefa"
+    },
+    "view_state": {
+      "invalid_type_error": "Informe se a tarefa é publica ou privada",
+      "required_error": "Informe se a tarefa é publica ou privada"
+    },
+    "description": {
+      "invalid_type_error": "Informe a descrição da tarefa",
+      "required_error": "Informe a descrição da tarefa"
+    },
+    "price": {
+      "invalid_type_error": "Informe preço da tarefa",
+      "required_error": "Informe preço da tarefa"
+    },
+    "service_id": {
+      "invalid_type_error": "Informe id do serviço",
+      "required_error": "Informe id do serviço"
+    },
+    "service_provider_ids": {
+      "invalid_type_error": "Informe o id do provedor de serviço",
+      "required_error": "Informe o id do provedor de serviço"
+    },
+    "address_id": {
+      "invalid_type_error": "Informe id do endereço",
+      "required_error": "Informe id do endereço"
+    },
+    "question_id": {
+      "invalid_type_error": "Informe id da pergunta",
+      "required_error": "Informe id da pergunta"
+    },
+    "answers": {
+      "invalid_type_error": "Informe a resposta da pergunta",
+      "required_error": "Informe a resposta da pergunta"
+    },
+    "start_date": {
+      "invalid_type_error": "Informe a data pretendida para realizar a tarefa",
+      "required_error": "Informe a data pretendida para realizar a tarefa"
+    }
+  },
+  "favorite": {
+    "service_provider_id": {
+      "invalid_type_error": "Informe o id do provedor de serviço",
+      "required_error": "Informe o id do provedor de serviço"
+    }
+  },
+  "user": {
+    "id": {
+      "invalid_type_error": "Informe o id do usuário",
+      "required_error": "Informe o id do usuário"
+    },
+    "first_name": {
+      "invalid_type_error": "Informe o primeiro nome",
+      "required_error": "Informe o primeiro nome"
+    },
+    "last_name": {
+      "invalid_type_error": "Informe o último nome",
+      "required_error": "Informe o último nome"
+    },
+    "email": {
+      "invalid_type_error": "Informe o email",
+      "required_error": "Informe o email"
+    },
+    "password": {
+      "invalid_type_error": "Informe a palavra-passe",
+      "required_error": "Informe a palavra-passe"
+    },
+    "current_password": {
+      "invalid_type_error": "Tens de informar a palavra-passe atual",
+      "required_error": "Tens de informar a palavra-passe atual"
+    },
+    "new_password": {
+      "invalid_type_error": "Informe a nova palavra-passe",
+      "required_error": "Informe a nova palavra-passe"
+    },
+    "language": {
+      "invalid_type_error": "Informe a linguagem padrão",
+      "required_error": "Informe a linguagem padrão"
+    },
+    "born_at": {
+      "invalid_type_error": "Informe a data de nascimento",
+      "required_error": "Informe a data de nascimento"
+    },
+    "notification_token": {
+      "invalid_type_error": "Informe o token de notificação",
+      "required_error": "Informe o token de notificação",
+      "updated": "Tokena atualizado com sucesso"
+    },
+    "gender": {
+      "invalid_type_error": "Informe o gênero",
+      "required_error": "Informe o gênero"
+    },
+    "phone_number": {
+      "invalid_type_error": "Informe o número de telefone",
+      "required_error": "Informe o número de telefone"
+    },
+    "address": {
+      "invalid_type_error": "Informe o endereço",
+      "required_error": "Informe o endereço",
+      "not_found": "Endereço não encontrado"
+    },
+    "description": {
+      "invalid_type_error": "Informe a descrição do perfíl",
+      "required_error": "Informe a descrição do perfíl"
+    },
+    "skills": {
+      "invalid_type_error": "Informe as tuas habilidades",
+      "required_error": "Informe as tuas habilidades"
+    },
+    "not_found": "Conta não encontrada",
+    "client_not_found": "Conta cliente não encontrada",
+    "sp_not_found": "Conta do provedor de serviço não encontrada",
+    "account_already_exist": "Já existe uma conta associada a este email",
+    "invalid_address": "Este usuario não tem um endereço associado"
+  },
+  "address": {
+    "id": {
+      "invalid_type_error": "Informe o id do endereço",
+      "required_error": "Informe o id do endereço"
+    },
+    "name": {
+      "invalid_type_error": "Informe o nome do endereço",
+      "required_error": "Informe o nome do endereço"
+    },
+    "line1": {
+      "invalid_type_error": "Informe a localização",
+      "required_error": "Informe a localização"
+    },
+    "line2": {
+      "invalid_type_error": "Informe a localização",
+      "required_error": "Informe a localização"
+    },
+    "latitude": {
+      "invalid_type_error": "Informe a latitude",
+      "required_error": "Informe a latitude"
+    },
+    "longitude": {
+      "invalid_type_error": "Informe a longitude",
+      "required_error": "Informe a longitude"
+    }
+  },
+  "portfolio": {
+    "title": {
+      "invalid_type_error": "Informe o titulo do portfolio",
+      "required_error": "Informe o titulo do portfolio"
+    },
+    "description": {
+      "invalid_type_error": "Informe uma descrição para o portfolio",
+      "required_error": "Informe uma descrição para o portfolio"
+    }
+  },
+  "specialization": {
+    "title": {
+      "invalid_type_error": "Informe o título",
+      "required_error": "Informe o título"
+    },
+    "price": {
+      "invalid_type_error": "Informe o preço",
+      "required_error": "Informe o preço"
+    },
+    "service_id": {
+      "invalid_type_error": "Selecione o serviço",
+      "required_error": "Selecione o serviço"
+    },
+    "rate": {
+      "invalid_type_error": "Selecione a modalidade: POR HORA ou fixa",
+      "required_error": "Selecione a modalidade: POR HORA ou fixa"
+    }
+  },
+  "credit": {
+    "credit": {
+      "invalid_type_error": "Informe o pacote de credito",
+      "required_error": "Informe o pacote de credito"
+    }
+  },
+  "authenticate": {
+    "account_type": {
+      "invalid_type_error": "Informe o tipo de conta",
+      "required_error": "Informe o tipo de conta"
+    },
+    "email": {
+      "invalid_type_error": "Informe o email",
+      "required_error": "Informe o email",
+      "valid": "Informe um endereço de email valido"
+    },
+    "password": {
+      "invalid_type_error": "Informe a palavra-passe",
+      "required_error": "Informe a palavra-passe"
+    },
+    "otp": {
+      "invalid_type_error": "Informe o código OTP",
+      "required_error": "Informe o código OTP",
+      "valid": "O código OTP tem de ter 4 digitos",
+      "invalid_otp": "Código OTP invalido"
+    }
+  },
+  "payment_method": {
+    "bank_name": {
+      "invalid_type_error": "Informe o nome do banco",
+      "required_error": "Informe o nome do banco"
+    },
+    "bank_holder_name": {
+      "invalid_type_error": "Informe o nome do proprietario",
+      "required_error": "Informe o nome do proprietario"
+    },
+    "iban": {
+      "invalid_type_error": "Informe o IBAN",
+      "required_error": "Informe o IBAN"
+    },
+    "city": {
+      "invalid_type_error": "Informe a cidade",
+      "required_error": "Informe a cidade"
+    },
+    "no_payment_method_created": "Sem metodos de pagamentos criado",
+    "payment_method_created": "Metodo de pagamento criado"
+  },
+  "review": {
+    "stars": {
+      "invalid_type_error": "Informe as estrelas",
+      "required_error": "Informe as estrelas"
+    },
+    "feedback": {
+      "invalid_type_error": "Informe o feedback",
+      "required_error": "Informe o feedback"
+    }
+  },
+  "booking": {
+    "not_found": "Agenda não encontrada",
+    "accept_to_finish": "Agenda terminada com sucesso!",
+    "accept_to_start": "Agenda adicionada para arranque com sucesso!",
+    "deny_to_finish": "Rejeitada pedido de inicio da agenda",
+    "deny_to_start": "Inicio da agenda rejeitada"
+  },
+  "job": {
+    "not_found": "Trabalho não encontrado",
+    "job_cancel": "Trabalho cancelado",
+    "job_deleted": "Tarefa eliminada",
+    "job_payment": "Job payment"
+  },
+  "notification": {
+    "not_found": "Notificação não encontrada",
+    "register_success_title": "Conta registrada!",
+    "register_success_description": " a tua conta foi registrada com sucesso!"
+  },
+  "account": {
+    "validate_account": "Código OTP para validar a conta"
+  },
+  "transaction": {
+    "send_quotation": "creditos discontados da tua conta"
+  }
+}

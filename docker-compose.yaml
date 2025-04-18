@@ -1,0 +1,28 @@
+services:
+  postgres:
+    container_name: bulir-api
+    image: postgres
+    restart: always
+    env_file:
+        - .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - PDGDATA=/data/postgres
+    volumes:
+      - ./data/pg:/data/postgres
+    ports:
+      - '5432:5432'
+  cache:
+    container_name: bulir-api-cache
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    volumes: 
+      - cache:/data
+volumes:
+  cache:
+    driver: local

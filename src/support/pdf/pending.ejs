@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+
+  <style>
+    table {
+      width: 100%;
+    }
+
+    body {
+      font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    }
+
+    th {
+      text-align: left;
+    }
+
+    .container {
+      margin-left: 1.5rem;
+      margin-right: 1.5rem;
+      padding: 1.5rem;
+      background-color: rgb(255 255 255);
+    }
+
+    .sub-container {
+      padding: 2rem;
+    }
+
+    .header-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .header-title {
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 0;
+    }
+
+    .header-enterprise {
+      text-align: right;
+      margin-left: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .header-enterprise svg {
+      width: 2.5rem;
+      height: 2.5rem;
+      display: block;
+      vertical-align: middle;
+    }
+
+    .header-enterprise-title {
+      --tw-space-y-reverse: 0;
+      margin-bottom: calc(.75rem* var(--tw-space-y-reverse));
+      margin-top: calc(.75rem*(1 - var(--tw-space-y-reverse)));
+    }
+
+    .header-enterprise-title-h1 {
+      --tw-text-opacity: 1;
+      color: rgb(17 24 39 / var(--tw-text-opacity));
+      font-weight: 600;
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+    }
+
+    .header-enterprise-title-location {
+      --tw-space-y-reverse: 0;
+      margin-bottom: calc(.25rem* var(--tw-space-y-reverse));
+      margin-top: calc(.25rem*(1 - var(--tw-space-y-reverse)));
+      --tw-text-opacity: 1;
+      color: rgb(17 24 39 / var(--tw-text-opacity));
+      font-weight: 400;
+      font-size: .875rem;
+      line-height: 1.25rem;
+    }
+
+    .bill-to-container {
+      --tw-space-y-reverse: 0;
+      margin-bottom: calc(1.5rem* var(--tw-space-y-reverse));
+      margin-top: calc(1.5rem*(1 - var(--tw-space-y-reverse)));
+      width: 18rem;
+    }
+
+    .bill-to-header {
+      --tw-text-opacity: 1;
+      color: rgb(17 24 39 / var(--tw-text-opacity));
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .bill-to-address {
+      --tw-text-opacity: 1;
+      color: rgb(107 114 128 / var(--tw-text-opacity));
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+
+    .bill-table-container {
+      --tw-space-y-reverse: 0;
+      margin-bottom: calc(1.5rem* var(--tw-space-y-reverse));
+      margin-top: calc(1.5rem*(1 - var(--tw-space-y-reverse)));
+      flex-direction: column;
+      display: flex;
+      --tw-border-opacity: 1;
+      border-color: rgb(229 231 235 / var(--tw-border-opacity));
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
+    }
+
+    .bill-table-sub-container {
+      --tw-border-opacity: 1;
+      border-color: rgb(229 231 235 / var(--tw-border-opacity));
+      border-bottom-width: 1px;
+      overflow-x: auto;
+    }
+
+    .bill-table-sub-sub-container {
+      vertical-align: middle;
+      min-width: 100%;
+      display: inline-block;
+      --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px -1px rgba(0, 0, 0, .1);
+      --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
+      box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+      overflow: hidden;
+    }
+
+    .bill-table {
+      min-width: 100%;
+      border-collapse: collapse;
+      border-color: inherit;
+      text-indent: 0;
+    }
+
+    .bill-thead, 
+    .bill-thead tr {
+      --tw-text-opacity: 1;
+      color: rgb(17 24 39 / var(--tw-text-opacity));
+      --tw-bg-opacity: 1;
+      background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+    }
+
+    .bill-th {
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: .75rem;
+      line-height: 1rem;
+      text-align: left;
+      padding: 1rem;
+      border-bottom-left-radius: .5rem;
+      border-top-left-radius: .5rem;
+    }
+
+    .bill-th-price {
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: .75rem;
+      line-height: 1rem;
+      text-align: left;
+      padding: 1rem;
+    }
+
+    .bill-tbody {
+      --tw-text-opacity: 1;
+      color: rgb(17 24 39 / var(--tw-text-opacity));
+      --tw-bg-opacity: 1;
+      background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+    }
+
+    .bill-tbody-td {
+      font-weight: 400;
+      font-size: .875rem;
+      line-height: 1.25rem;
+      padding: 1rem;
+      white-space: nowrap;
+    }
+
+    .bill-tfooter {
+      --tw-space-y-reverse: 0;
+      margin-bottom: calc(1.5rem* var(--tw-space-y-reverse));
+      margin-top: calc(1.5rem*(1 - var(--tw-space-y-reverse)));
+      text-align: right;
+      width: 18rem;
+      margin-left: auto;
+    }
+
+    .bill-subtotal {
+      justify-content: space-between;
+      display: flex;
+    }
+
+    .subtotal {
+      --tw-text-opacity: 1;
+      color: rgb(107 114 128 / var(--tw-text-opacity));
+      font-weight: 500;
+      font-size: .875rem;
+      line-height: 1.25rem;
+    }
+
+    .subtotal-value {
+      --tw-text-opacity: 1;
+      color: rgb(17 24 39 / var(--tw-text-opacity));
+      font-weight: 500;
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+
+    .bill-total {
+      --tw-space-y-reverse: 0;
+      justify-content: space-between;
+      display: flex;
+    }
+
+    .total {
+      --tw-text-opacity: 1;
+      color: rgb(17 24 39 / var(--tw-text-opacity));
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+
+    .total-value {}
+  </style>
+</head>
+
+<body>
+
+
+  <div class="container">
+    <div class="sub-container">
+      <!-- header container -->
+      <div class="header-container">
+        <div class="header-title">
+          Recibo
+        </div>
+        <div class="header-enterprise">
+          <svg xmlns="http://www.w3.org/2000/svg" width="157" height="157" viewBox="0 0 157 157" fill="none">
+            <path
+              d="M32.7738 0H123.746C141.871 0 156.52 14.6986 156.52 32.774V123.747C156.52 141.872 141.822 156.52 123.746 156.52H32.7738C14.6488 156.52 -0.00012207 141.822 -0.00012207 123.747V32.774C-0.00012207 14.6986 14.6985 0 32.7738 0Z"
+              fill="#31ECC6" />
+            <path
+              d="M96.1865 86.4036C94.3492 86.4036 92.8594 84.9139 92.9091 83.0765C92.9091 77.6639 92.9091 61.4259 92.7105 56.7084C92.2635 43.7974 81.5375 33.6673 67.7327 33.1707C54.1762 32.7238 42.3578 42.8539 41.9108 55.3676C41.6626 62.0714 41.5136 69.1228 41.4639 77.8625C42.904 77.8625 44.3441 77.8625 45.7345 77.8625C47.1249 77.8625 48.5153 77.8625 49.8064 77.8625H66.392C68.2293 78.0115 69.6197 79.6005 69.4707 81.4378C69.3714 83.0765 68.0307 84.4173 66.392 84.5166H49.9057C48.6146 84.5166 47.1249 84.5166 45.6351 84.5166C44.1454 84.5166 42.3578 84.5166 40.7687 84.5166H38.4845H38.2362C37.3423 84.5663 36.4485 84.2187 35.803 83.5731C35.1574 82.9276 34.8098 82.0834 34.8098 81.1895C34.8098 70.7615 35.0084 62.6673 35.3064 55.02C35.9023 38.931 50.8492 25.7718 68.0307 26.4173C85.2122 27.0629 98.868 39.9242 99.4142 56.3608C99.6129 61.5748 99.6625 78.3094 99.6128 83.0269C99.6625 84.8642 98.1728 86.4036 96.3355 86.4532C96.2858 86.4036 96.2361 86.4036 96.1865 86.4036Z"
+              fill="#0C2340" />
+            <path
+              d="M88.5392 130.052H37.392C35.5546 129.903 34.1642 128.314 34.3132 126.477C34.4125 124.838 35.7533 123.498 37.392 123.398H100.358C112.524 123.299 121.015 117.986 125.484 107.905C129.954 97.8247 128.364 88.4394 120.866 80.1466C117.291 76.025 112.325 73.2939 106.912 72.4497C105.125 72.1517 103.883 70.4634 104.132 68.6757C104.38 66.888 106.118 65.6466 107.906 65.8949C114.808 66.9874 121.114 70.4137 125.733 75.6774C135.019 85.9565 137.055 98.0233 131.543 110.587C126.031 123.15 115.205 129.903 100.358 130.052H88.5392Z"
+              fill="#0C2340" />
+            <path
+              d="M67.1369 100.159H36.6969C34.8595 100.308 33.2705 98.9177 33.1215 97.0804C32.9726 95.2431 34.363 93.6541 36.2003 93.5051C36.3493 93.5051 36.5479 93.5051 36.6969 93.5051H67.1369C68.9743 93.3561 70.5633 94.7465 70.7123 96.5838C70.8612 98.4212 69.4708 100.01 67.6335 100.159C67.4349 100.209 67.2859 100.209 67.1369 100.159Z"
+              fill="#0C2340" />
+            <path
+              d="M67.8817 113.815H37.392C35.5546 113.666 34.1642 112.077 34.3132 110.24C34.4125 108.601 35.7533 107.26 37.392 107.161H67.8817C69.719 107.31 71.1094 108.899 70.9604 110.736C70.8115 112.375 69.5204 113.716 67.8817 113.815Z"
+              fill="#0C2340" />
+          </svg>
+
+          <div class="header-enterprise-title">
+            <div class="header-enterprise-title-h1">
+              Bulir Technology, Lda
+            </div>
+            <div class="header-enterprise-title-location">
+              R. Luther King 89, Maculusso - Luanda
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- bill to container -->
+      <div style="display: flex; flex-direction: row; justify-content: space-between;">
+        <div class="bill-to-container">
+          <div class="bill-to-header">Para</div>
+          <address class="bill-to-address">
+            Transação# <%= invoiceNum %> <br>
+            <%= billTo %> <br>
+            <%= billToAddress %>
+          </address>
+        </div>
+
+        <div class="bill-to-container">
+          <div class="bill-to-header" style="opacity: 0;">Para</div>
+          <div class="bill-subtotal">
+            <div class="subtotal">Data:</div>
+            <div class="subtotal-value"><%= invoiceDate %></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- bill table -->
+      <div class="bill-table-container">
+        <div class="bill-table-sub-container">
+          <div class="bill-table-sub-sub-container">
+            <table class="bill-table">
+              <thead class="bill-thead">
+                <tr>
+                  <th class="bill-th">Qtd.</th>
+                  <th class="bill-th-price">Descrição</th>
+                  <th class="bill-th-price">Preço Unitario</th>
+                  <th class="bill-th">Preço</th>
+                </tr>
+              </thead>
+              <tbody class="bill-tbody">
+                <tr>
+                  <td class="bill-tbody-td">
+                    <div><%= qty %></div>
+                  </td>
+                  <td class="bill-tbody-td">
+                    <div style="width: 300px; word-wrap: break-word;overflow-wrap: break-word;white-space: normal;white-space: nowrap;white-space: pre;white-space: pre-wrap;word-break: break-all;word-break: keep-all;word-break: normal;
+                    "><%= description %></div>
+                  </td>
+                  <td class="bill-tbody-td">
+                    <div><%= unityPrice %></div>
+                  </td>
+                  <td class="bill-tbody-td">
+                    <div><%= price %></div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- bill footer -->
+      <div class="bill-tfooter">
+        <div class="bill-subtotal">
+          <div class="subtotal">Subtotal:</div>
+          <div class="subtotal-value"><%= subtotal %></div>
+        </div> 
+
+        <div class="bill-subtotal">
+          <div class="subtotal">IVA 14%:</div>
+          <div class="subtotal-value"><%= iva %></div>
+        </div>
+
+        <div class="bill-total">
+          <div class="total">TOTAL:</div>
+          <div class="total"><%= total %></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
