@@ -3,6 +3,11 @@ export interface ServicePaginationParams {
   perPage?: number
   subSubcategoryId?: string
   language: "en" | "pt"
+  select?: {
+    id: boolean
+    title: boolean
+    parentId: boolean
+  }
 }
 
 export interface ServiceManyBySubCategory {

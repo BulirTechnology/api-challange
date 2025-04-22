@@ -52,7 +52,7 @@ import { ExcelModule } from "./xlsx/xlsx.module";
 
         return {
           store,
-          ttl: 30 * 1000,
+          ttl: 300,
         };
       },
       store: redisStore,

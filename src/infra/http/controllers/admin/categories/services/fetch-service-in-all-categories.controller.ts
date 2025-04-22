@@ -5,6 +5,7 @@ import {
   Headers,
   Query,
 } from "@nestjs/common";
+import { CacheKey, CacheTTL } from "@nestjs/cache-manager";
 
 import { z } from "zod";
 
@@ -25,10 +26,10 @@ const pageQueryParamSchema = z
 const perPageQueryParamSchema = z
   .string()
   .optional()
-  .default("1")
+  .default("10")
   .transform(Number)
   .pipe(
-    z.number().min(1)
+    z.number().min(1).max(100)
   );
 
 type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>
@@ -46,6 +47,8 @@ export class FetchServiceInAllCategoriesController {
   constructor(private fetchServices: FetchServicesUseCase) { }
 
   @Get()
+  @CacheKey('services')
+  @CacheTTL(300) // Cache for 5 minutes instead of 1 hour
   async handle(
     @Headers() headers: Record<string, string>,
     @Query() query: QueryParamsSchema
@@ -62,7 +65,6 @@ export class FetchServiceInAllCategoriesController {
     }
 
     const meta = result.value.meta;
-
     return {
       data: result.value?.services.map(ServicePresenter.toHTTP),
       meta: {

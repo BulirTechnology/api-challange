@@ -274,6 +274,7 @@ model SubSubCategory {
   category      SubCategory @relation(fields: [subCategoryId], references: [id])
   services      Services[]
 
+  @@index([subCategoryId], name: "idx_sub_sub_category_sub_category_id")
   @@map("sub_sub_categories")
 }
 
@@ -290,6 +291,11 @@ model Services {
   updatedAt        DateTime?        @default(now()) @map("updated_at")
   category         SubSubCategory   @relation(fields: [subSubCategoryId], references: [id])
 
+  @@index([subSubCategoryId], name: "idx_services_sub_sub_category_id")
+  @@index([createdAt], name: "idx_services_created_at")
+  @@index([title], name: "idx_services_title")
+  @@index([titleEn], name: "idx_services_title_en")
+  @@index([subSubCategoryId, createdAt], name: "idx_services_sub_sub_category_created_at")
   @@map("services")
 }
 

@@ -131,20 +131,36 @@ export class PrismaServicesRepository implements ServicesRepository {
   }
 
   async findMany(params: ServicePaginationParams): Promise<Pagination<Service>> {
-    const services = await this.paginate({
-      where: {
-        subSubCategoryId: params.subSubcategoryId ? params.subSubcategoryId : {}
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-      page: params.page,
-      perPage: params.perPage
-    });
+    // Use raw SQL for better performance with proper indexing
+    const [services, total] = await Promise.all([
+      this.prisma.$queryRaw<Array<{ id: string; title: string; titleEn: string; subSubCategoryId: string; createdAt: Date; updatedAt: Date }>>`
+        SELECT id, title, "title_en" as "titleEn", "sub_sub_category_id" as "subSubCategoryId", "created_at" as "createdAt", "updated_at" as "updatedAt"
+        FROM services
+        WHERE ${params.subSubcategoryId ? Prisma.sql`"sub_sub_category_id" = ${params.subSubcategoryId}` : Prisma.sql`1=1`}
+        ORDER BY "created_at" DESC
+        LIMIT ${params.perPage || 10}
+        OFFSET ${((params.page || 1) - 1) * (params.perPage || 10)}
+      `,
+      this.prisma.$queryRaw<Array<{ count: bigint }>>`
+        SELECT COUNT(*) as count
+        FROM services
+        WHERE ${params.subSubcategoryId ? Prisma.sql`"sub_sub_category_id" = ${params.subSubcategoryId}` : Prisma.sql`1=1`}
+      `
+    ]);
+
+    const totalCount = Number(total[0].count);
+    const lastPage = Math.ceil(totalCount / (params.perPage || 10));
 
     return {
-      data: services.data.map(item => PrismaServiceMapper.toDomain(item, params.language)),
-      meta: services.meta
+      data: services.map(item => PrismaServiceMapper.toDomain(item, params.language)),
+      meta: {
+        total: totalCount,
+        lastPage,
+        currentPage: params.page || 1,
+        perPage: params.perPage || 10,
+        prev: params.page && params.page > 1 ? params.page - 1 : null,
+        next: params.page && params.page < lastPage ? params.page + 1 : null
+      }
     };
   }
 
