@@ -382,6 +382,7 @@ import { UsersManagementGetSummaryUseCase } from "@/domain/users/application/use
 import { GetUsersByAccountTypeUseCase } from "@/domain/users/application/use-cases/backoffice/users-management/get-users-by-account-type";
 import { ExportUsersUseCase } from "@/domain/users/application/use-cases/backoffice/users-management/export-users";
 import { ExcelModule } from "../xlsx/xlsx.module";
+import { CacheModule } from "../cache/cache.module";
 
 @Module({
   imports: [
@@ -394,6 +395,7 @@ import { ExcelModule } from "../xlsx/xlsx.module";
     NotificationModule,
     WebsocketModule,
     ExcelModule,
+    CacheModule,
   ],
   providers: [
     FetchConversationsUseCase,
