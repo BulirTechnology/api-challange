@@ -45,7 +45,7 @@ export class SessionBackofficeUseCase {
     }
 
     const { accessToken, refreshToken } = await this.encrypter.encrypt(
-      { sub: user.id.toString() },
+      { sub: user.id.toString(), role:accountType },
       rememberMe
     );
 

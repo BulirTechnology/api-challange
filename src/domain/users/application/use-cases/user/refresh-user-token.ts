@@ -40,7 +40,7 @@ export class RefreshTokenUserUseCase {
       return left(new WrongCredentialsError());
     }
 
-    const { accessToken } = await this.encrypter.encrypt({ sub: user.id.toString() }, false);
+    const { accessToken } = await this.encrypter.encrypt({ sub: user.id.toString(), role: user.accountType }, false);
 
     return right({
       token: accessToken,

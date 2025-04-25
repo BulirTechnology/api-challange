@@ -114,7 +114,7 @@ export class SocialAuthenticationUserUseCase {
     this.clientRepository.create(client);
 
     const { accessToken, refreshToken } = await this.encrypter.encrypt(
-      { sub: user.id.toString() },
+      { sub: user.id.toString(), role: user.accountType },
       false
     );
 
@@ -182,7 +182,7 @@ export class SocialAuthenticationUserUseCase {
     const client = await this.clientRepository.findByEmail(params.email);
 
     const { accessToken, refreshToken } = await this.encrypter.encrypt(
-      { sub: user.id.toString() },
+      { sub: user.id.toString(), role: user.accountType },
       false
     );
 
