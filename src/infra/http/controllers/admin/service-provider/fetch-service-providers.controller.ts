@@ -40,7 +40,7 @@ type QueryParams = {
 
 @ApiTags("ServiceProviders")
 @Controller("/service-providers")
-@Public()
+// @Public()
 export class FetchAllServiceProviderController {
   constructor(
     private env: EnvService,

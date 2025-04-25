@@ -11,6 +11,7 @@ import { Booking } from "@/domain/work/enterprise/booking";
 
 import { BookingsRepository } from "../../../repositories/booking-repository";
 import { LanguageSlug } from "@/domain/users/enterprise";
+import { Role } from "@/infra/auth/enums/role.enum";
 
 interface FetchServiceProviderBookingsUseCaseRequest {
   language: LanguageSlug
@@ -55,22 +56,22 @@ export class FetchServiceProviderBookingsUseCase {
       return left(new ResourceNotFoundError("Account not found"));
     }
 
-    const serviceProvider = await this.serviceProvidersRepository.findByEmail(user.email);
+    // const serviceProvider = await this.serviceProvidersRepository.findByEmail(user.email);
 
-    if (!serviceProvider) {
-      return left(new ResourceNotFoundError("Service provider not found"));
-    }
+    // if (!serviceProvider) {
+    //   return left(new ResourceNotFoundError("Service provider not found"));
+    // }
 
     const bookings = await this.bookingsRepository.findServiceProviderBooking({
       page,
-      serviceProviderId: serviceProvider.id.toString(),
+      serviceProviderId: user.id.toString(),
       status,
       perPage
     });
 
     const countBookingByState = await this.bookingsRepository.getWorkRequestCountsByState({
-      parentId: serviceProvider.id.toString(),
-      accountType: "ServiceProvider"
+      parentId: user.id.toString(),
+      accountType: Role.SERVICE_PROVIDER
     })
 
     return right({
