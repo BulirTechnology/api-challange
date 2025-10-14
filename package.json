@@ -29,7 +29,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.485.0",
     "@codeherence/react-native-header": "^0.12.1",
-    "@nestjs-modules/mailer": "^1.10.3",
+    "@nestjs-modules/mailer": "^2.0.0",
     "@nestjs/axios": "^3.0.1",
     "@nestjs/bull": "^10.1.1",
     "@nestjs/cache-manager": "^2.2.2",
@@ -74,7 +74,7 @@
     "multer-s3": "^3.0.1",
     "nest-puppeteer": "^1.1.1",
     "nestjs-i18n": "^10.4.5",
-    "nodemailer": "^6.9.8",
+    "nodemailer": "^7.0.7",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.1",
