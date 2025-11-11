@@ -57,7 +57,7 @@
     "cache-manager-redis-yet": "^5.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
-    "cloudinary": "^1.41.3",
+    "cloudinary": "^2.7.0",
     "cron": "^3.2.1",
     "dayjs": "^1.11.10",
     "easyinvoice": "^3.0.47",
